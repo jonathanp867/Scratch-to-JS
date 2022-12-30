@@ -1,0 +1,42 @@
+// List of all GIF files in the folder
+const gifFiles = ['file1.gif', 'file2.gif', 'file3.gif', 'file4.gif'];
+
+// Function to select a random GIF file
+function selectRandomGif() {
+  // Get a random index from the list of GIF files
+  const randomIndex = Math.floor(Math.random() * gifFiles.length);
+
+  // Return the GIF file at the random index
+  return gifFiles[randomIndex];
+}
+
+// Function to upload the selected GIF file as a sprite in Scratch
+function uploadGifAsSprite(gifFile) {
+  // Create a new image element and set its src to the GIF file
+  const image = new Image();
+  image.src = gifFile;
+
+  // Wait for the image to load
+  image.onload = function() {
+    // Get the canvas element from the Scratch editor
+    const canvas = scratchEditor.getCanvas();
+
+    // Get the context of the canvas
+    const ctx = canvas.getContext('2d');
+
+    // Draw the image on the canvas
+    ctx.drawImage(image, 0, 0);
+
+    // Get the image data from the canvas
+    const imageData = ctx.getImageData(0, 0, image.width, image.height);
+
+    // Create a new sprite in the Scratch editor with the image data
+    scratchEditor.createSprite(imageData);
+  }
+}
+
+// Select a random GIF file
+const randomGif = selectRandomGif();
+
+// Upload the selected GIF file as a sprite in Scratch
+uploadGifAsSprite(randomGif);
